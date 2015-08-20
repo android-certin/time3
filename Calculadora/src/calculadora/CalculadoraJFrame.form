@@ -33,8 +33,8 @@
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="Entrada" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="txtEntrada" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="txtEntrada" min="-2" pref="406" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnConverter" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -46,7 +46,8 @@
                       <Component id="btnHex" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnOctal" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="252" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnHistorico" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -65,15 +66,18 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnDecimal" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnBinary" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnHex" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnOctal" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnDecimal" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBinary" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnHex" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnOctal" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="btnHistorico" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="199" max="-2" attributes="0"/>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -90,7 +94,7 @@
     </Component>
     <Component class="java.awt.Label" name="Entrada">
       <Properties>
-        <Property name="text" type="java.lang.String" value="label1"/>
+        <Property name="text" type="java.lang.String" value="Entrada"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEntrada">
@@ -103,6 +107,7 @@
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btnTipoOperacao"/>
         </Property>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Decimal"/>
       </Properties>
     </Component>
@@ -148,5 +153,14 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnHistorico">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Historico"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnHistoricoMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistoricoActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

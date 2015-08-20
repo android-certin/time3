@@ -42,14 +42,14 @@ public class Calculadora {
                 break;
             case "octal" :
                 decimal = Integer.parseInt(entrada, 8);
-                retorno+= Integer.toBinaryString(decimal) + "\n"; // bin
-                retorno = String.valueOf(decimal) + "\n"; // dec
+                retorno = Integer.toBinaryString(decimal) + "\n"; // bin
+                retorno+= String.valueOf(decimal) + "\n"; // dec
                 retorno+= "0x"+ Integer.toHexString(decimal) + "\n"; // hex
                 break;
             case "hex" :
                 decimal = Integer.parseInt(entrada, 16);
-                retorno+= Integer.toBinaryString(decimal) + "\n"; // bin
-                retorno = String.valueOf(decimal) + "\n"; // dec
+                retorno = Integer.toBinaryString(decimal) + "\n"; // bin
+                retorno+= String.valueOf(decimal) + "\n"; // dec
                 retorno+= "0o" + Integer.toOctalString(decimal) + "\n"; // oct
                 break;
         }

@@ -5,9 +5,8 @@
  */
 package calculadora;
 
-import java.util.Enumeration;
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  *
@@ -15,11 +14,16 @@ import javax.swing.JRadioButton;
  */
 public class CalculadoraJFrame extends javax.swing.JFrame {
 
+    private static final String ARQ_HISTORICO = "historico";
+    
+    private Historico historico;
+    
     /**
      * Creates new form CalculadoraJFrame
      */
     public CalculadoraJFrame() {
         initComponents();
+        historico = Historico.getInstance();
     }
 
     /**
@@ -41,6 +45,7 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
         btnOctal = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtResultado = new javax.swing.JTextArea();
+        btnHistorico = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,7 +61,7 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
             }
         });
 
-        Entrada.setText("label1");
+        Entrada.setText("Entrada");
 
         txtEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,6 +70,7 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
         });
 
         btnTipoOperacao.add(btnDecimal);
+        btnDecimal.setSelected(true);
         btnDecimal.setText("Decimal");
 
         btnTipoOperacao.add(btnBinary);
@@ -85,6 +91,18 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
         txtResultado.setRows(5);
         jScrollPane1.setViewportView(txtResultado);
 
+        btnHistorico.setText("Historico");
+        btnHistorico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHistoricoMouseClicked(evt);
+            }
+        });
+        btnHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoricoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,8 +113,8 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(txtEntrada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnConverter))
                     .addGroup(layout.createSequentialGroup()
@@ -107,7 +125,8 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
                         .addComponent(btnHex)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnOctal)
-                        .addGap(0, 252, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHistorico)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,14 +139,16 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
                         .addComponent(btnConverter)
                         .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDecimal)
-                    .addComponent(btnBinary)
-                    .addComponent(btnHex)
-                    .addComponent(btnOctal))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnDecimal)
+                        .addComponent(btnBinary)
+                        .addComponent(btnHex)
+                        .addComponent(btnOctal))
+                    .addComponent(btnHistorico, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,14 +166,27 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEntradaActionPerformed
 
+    
     private void btnConverterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConverterMouseClicked
-        String entrada = txtEntrada.getText();
         
+        String entrada = txtEntrada.getText();
         Calculadora service = new Calculadora();
         String tipoConversao = service.getTipoOperacao(btnTipoOperacao.getElements());
-        
         txtResultado.setText(service.coverte(entrada, tipoConversao));
+        historico.writeHistorico(entrada, tipoConversao);
+        txtEntrada.setText("");
+        txtEntrada.requestFocus();
     }//GEN-LAST:event_btnConverterMouseClicked
+
+    private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHistoricoActionPerformed
+
+    private void btnHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoricoMouseClicked
+
+        txtResultado.setText(historico.readHistorico());
+
+    }//GEN-LAST:event_btnHistoricoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -195,10 +229,15 @@ public class CalculadoraJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnConverter;
     private javax.swing.JRadioButton btnDecimal;
     private javax.swing.JRadioButton btnHex;
+    private javax.swing.JButton btnHistorico;
     private javax.swing.JRadioButton btnOctal;
     private javax.swing.ButtonGroup btnTipoOperacao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtEntrada;
     private javax.swing.JTextArea txtResultado;
     // End of variables declaration//GEN-END:variables
+
+    private FileInputStream FileInputStream(File file) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
