@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">World Wonders</string>
+    <string name="username_hint">Nome de usuário</string>
+    <string name="password_hint">Senha</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Configurações</string>
+    <string name="name_hint">Nome</string>
+    <string name="login_button">Entrar</string>
+    <string name="title_activity_signup">Registrar</string>
+    <string name="sing_up_button">Registrar</string>
 </resources>
