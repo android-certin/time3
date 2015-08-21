@@ -3,6 +3,7 @@ package com.ciandt.worldwonders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,34 +19,32 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final int SIGN_UP_REQUEST = 1;
 
-    private EditText username;
-    private EditText password;
-    private Button signup;
-    private Button login;
-    private UserModel user;
-
     private static final String TAG = "WorldWonders";
 
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         Log.w(TAG, "OnCreate");
 
-        username = (EditText) findViewById(R.id.textUsername);
-        password = (EditText) findViewById(R.id.textPassword);
-        signup = (Button) findViewById(R.id.sing_up_button);
-        login = (Button) findViewById(R.id.login_button);
-        user = new UserModel();
+        FragmentManager manager = getSupportFragmentManager();
+        LoginFragment fragment = new LoginFragment();
+        manager.beginTransaction().replace(R.id.container, fragment).commit();
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivityForResult(intent, SIGN_UP_REQUEST);
-            }
-        });
+//        username = (EditText) findViewById(R.id.textUsername);
+//        password = (EditText) findViewById(R.id.textPassword);
+//        signup = (Button) findViewById(R.id.sing_up_button);
+//        login = (Button) findViewById(R.id.login_button);
+//        user = new UserModel();
+//
+//        signup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+//                startActivityForResult(intent, SIGN_UP_REQUEST);
+//            }
+//        });
     }
 
     @Override
@@ -86,15 +85,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("LOGIN", "onActivityResult");
-        super.onActivityResult(requestCode, resultCode, data);
-        if( requestCode == SIGN_UP_REQUEST) {
-            if(resultCode == RESULT_OK) {
-                user = (UserModel) data.getSerializableExtra("user");
-                username.setText(user.name);
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.d("LOGIN", "onActivityResult");
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == SIGN_UP_REQUEST) {
+//            if (resultCode == RESULT_OK) {
+//                user = (UserModel) data.getSerializableExtra("user");
+//                username.setText(user.name);
+//            }
+//        }
+//    }
 }
