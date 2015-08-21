@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.zip.Inflater;
-
 /**
  * Created by bdias on 21/08/15.
  */
@@ -22,6 +20,10 @@ public class LoginFragment extends Fragment {
     private Button signup;
     private Button login;
     private UserModel user;
+
+    public static final int SIGN_UP_REQUEST = 1;
+    public static final int LOGIN_REQUEST = 2;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +46,32 @@ public class LoginFragment extends Fragment {
         login = (Button) view.findViewById(R.id.login_button);
         user = new UserModel();
 
-//        signup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-//            startActivityForResult(intent, SIGN_UP_REQUEST);
-//            }
-//        });
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent intent = new Intent(LoginFragment.this.getActivity(), SignupActivity.class);
+            startActivityForResult(intent, SIGN_UP_REQUEST);
+            }
+        });
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginFragment.this.getActivity(), WorldWondersActivity.class);
+                startActivity(intent);
+            }
+        });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIGN_UP_REQUEST) {
+            if (resultCode == getActivity().RESULT_OK) {
+                user = (UserModel) data.getSerializableExtra("user");
+                username.setText(user.name);
+            }
+        }
     }
 }
