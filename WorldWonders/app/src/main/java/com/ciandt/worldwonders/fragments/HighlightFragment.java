@@ -63,7 +63,11 @@ public class HighlightFragment extends Fragment {
         if (wonder != null) {
             name.setText(wonder.name.toUpperCase());
 
-            Picasso.with(getContext()).load(wonder.url).placeholder(R.drawable.placeholder).into(image);
+            Picasso.with(getContext())
+                    .load(wonder.url)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .into(image);
 
         }
 
