@@ -37,7 +37,7 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
     public static void setupDatabase(Context context) {
 
         File db = new File(DATABASE_PATH);
-        if (!db.exists()) {
+        if (!db.exists() || db.length() == 0) {
 
             try {
                 FileInputStream in = (FileInputStream)context.getAssets().open(ASSETS_DATABASE_PATH);
