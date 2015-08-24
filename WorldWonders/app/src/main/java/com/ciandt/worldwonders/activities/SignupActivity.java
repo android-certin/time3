@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.models.UserModel;
+import com.ciandt.worldwonders.models.User;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -18,7 +18,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private Button signup;
-    private UserModel user;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class SignupActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.textUsername);
         password = (EditText) findViewById(R.id.textPassword);
         signup = (Button) findViewById(R.id.sing_up_button);
-        user = new UserModel();
+        user = new User();
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override

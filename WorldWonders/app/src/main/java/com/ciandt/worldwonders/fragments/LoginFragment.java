@@ -12,8 +12,7 @@ import android.widget.EditText;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.activities.SignupActivity;
-import com.ciandt.worldwonders.models.UserModel;
-import com.ciandt.worldwonders.activities.WorldWondersActivity;
+import com.ciandt.worldwonders.models.User;
 
 /**
  * Created by bdias on 21/08/15.
@@ -30,7 +29,7 @@ public class LoginFragment extends Fragment {
     private EditText password;
     private Button signup;
     private Button login;
-    private UserModel user;
+    private User user;
 
     public static final int SIGN_UP_REQUEST = 1;
     public static final int LOGIN_REQUEST = 2;
@@ -55,13 +54,13 @@ public class LoginFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.textPassword);
         signup = (Button) view.findViewById(R.id.sing_up_button);
         login = (Button) view.findViewById(R.id.login_button);
-        user = new UserModel();
+        user = new User();
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent intent = new Intent(LoginFragment.this.getActivity(), SignupActivity.class);
-            startActivityForResult(intent, SIGN_UP_REQUEST);
+                Intent intent = new Intent(LoginFragment.this.getActivity(), SignupActivity.class);
+                startActivityForResult(intent, SIGN_UP_REQUEST);
             }
         });
 
@@ -71,8 +70,6 @@ public class LoginFragment extends Fragment {
                 if (loginListener != null) {
                     loginListener.onLogin(user);
                 }
-//                Intent intent = new Intent(LoginFragment.this.getActivity(), WorldWondersActivity.class);
-//                startActivity(intent);
             }
         });
 
@@ -83,7 +80,7 @@ public class LoginFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGN_UP_REQUEST) {
             if (resultCode == getActivity().RESULT_OK) {
-                user = (UserModel) data.getSerializableExtra("user");
+                user = (User) data.getSerializableExtra("user");
                 username.setText(user.name);
             }
         }
@@ -91,6 +88,6 @@ public class LoginFragment extends Fragment {
 
 
     public interface OnLoginListener {
-        void onLogin(UserModel user);
+        void onLogin(User user);
     }
 }

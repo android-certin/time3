@@ -1,6 +1,5 @@
 package com.ciandt.worldwonders.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,13 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.activities.SignupActivity;
 import com.ciandt.worldwonders.adapters.HighlightPageAdapter;
-import com.ciandt.worldwonders.models.UserModel;
+import com.ciandt.worldwonders.models.Wonder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bdias on 21/08/15.
@@ -40,8 +39,23 @@ public class WondersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewPager = (ViewPager)view.findViewById(R.id.view_pager);
 
+        ArrayList<Wonder> wonders = new ArrayList<Wonder>();
+
+        Wonder w1 = new Wonder();
+        w1.name = "Pirâmide de Queóps";
+
+        Wonder w2 = new Wonder();
+        w2.name = "Jardins suspensos da Babilônia";
+
+        Wonder w3 = new Wonder();
+        w3.name = "Colosso de Rodes";
+
+        wonders.add(w1);
+        wonders.add(w2);
+        wonders.add(w3);
+
         FragmentManager fragmentManager = getFragmentManager();
-        HighlightPageAdapter adapter = new HighlightPageAdapter(fragmentManager);
+        HighlightPageAdapter adapter = new HighlightPageAdapter(fragmentManager, wonders);
         viewPager.setAdapter(adapter);
 
     }
