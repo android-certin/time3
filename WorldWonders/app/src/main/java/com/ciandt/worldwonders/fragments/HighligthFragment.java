@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,8 @@ import android.support.v7.internal.widget.ActivityChooserModel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ciandt.worldwonders.R;
 
 /**
  * Created by bdias on 21/08/15.

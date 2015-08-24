@@ -1,9 +1,12 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.fragments.LoginFragment;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.activities.SignupActivity;
+import com.ciandt.worldwonders.models.UserModel;
+import com.ciandt.worldwonders.activities.WorldWondersActivity;
 
 /**
  * Created by bdias on 21/08/15.

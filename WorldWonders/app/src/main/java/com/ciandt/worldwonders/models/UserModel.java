@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.models;
 
 import java.io.Serializable;
 
