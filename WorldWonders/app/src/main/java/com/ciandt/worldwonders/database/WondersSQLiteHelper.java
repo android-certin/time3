@@ -36,12 +36,17 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
 
     public static void setupDatabase(Context context) {
 
+        File path = new File(DATABASE_DIRECTORY);
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+
         File db = new File(DATABASE_PATH);
-        if (!db.exists() || db.length() == 0) {
+        if (!db.exists()) {
 
             try {
-                FileInputStream in = (FileInputStream)context.getAssets().open(ASSETS_DATABASE_PATH);
-                OutputStream out = new FileOutputStream(db);
+                InputStream in = context.getAssets().open(ASSETS_DATABASE_PATH);
+                FileOutputStream out = new FileOutputStream(db);
 
                 // Transfer bytes from in to out
                 byte[] buf = new byte[1024];
