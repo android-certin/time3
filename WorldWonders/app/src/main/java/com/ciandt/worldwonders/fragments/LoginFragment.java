@@ -20,6 +20,12 @@ import com.ciandt.worldwonders.activities.WorldWondersActivity;
  */
 public class LoginFragment extends Fragment {
 
+    private OnLoginListener loginListener;
+
+    public void setLoginListener(OnLoginListener loginListener) {
+        this.loginListener = loginListener;
+    }
+
     private EditText username;
     private EditText password;
     private Button signup;
@@ -62,8 +68,11 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginFragment.this.getActivity(), WorldWondersActivity.class);
-                startActivity(intent);
+                if (loginListener != null) {
+                    loginListener.onLogin(user);
+                }
+//                Intent intent = new Intent(LoginFragment.this.getActivity(), WorldWondersActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -78,5 +87,10 @@ public class LoginFragment extends Fragment {
                 username.setText(user.name);
             }
         }
+    }
+
+
+    public interface OnLoginListener {
+        void onLogin(UserModel user);
     }
 }

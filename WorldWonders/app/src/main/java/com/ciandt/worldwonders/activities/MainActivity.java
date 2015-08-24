@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.fragments.LoginFragment;
+import com.ciandt.worldwonders.fragments.WondersFragment;
+import com.ciandt.worldwonders.models.UserModel;
 
 
 /**
@@ -23,8 +25,17 @@ public class MainActivity extends AppCompatActivity {
         Log.w(TAG, "OnCreate");
 
         FragmentManager manager = getSupportFragmentManager();
-        LoginFragment fragment = new LoginFragment();
-        manager.beginTransaction().replace(R.id.container, fragment).commit();
+        LoginFragment loginFragment = new LoginFragment();
+        loginFragment.setLoginListener(new LoginFragment.OnLoginListener() {
+            @Override
+            public void onLogin(UserModel user) {
+                FragmentManager manager = getSupportFragmentManager();
+                WondersFragment wondersFragment = new WondersFragment();
+                manager.beginTransaction().replace(R.id.container, wondersFragment).commit();
+            }
+        });
+
+        manager.beginTransaction().replace(R.id.container, loginFragment).commit();
     }
 
     @Override
