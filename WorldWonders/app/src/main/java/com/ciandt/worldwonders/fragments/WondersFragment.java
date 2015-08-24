@@ -43,12 +43,15 @@ public class WondersFragment extends Fragment {
 
         Wonder w1 = new Wonder();
         w1.name = "Pirâmide de Queóps";
+        w1.url = "http://1.bp.blogspot.com/-OwFpNnwopp4/Tw1xYXVASmI/AAAAAAAANlU/XbwNPVSeC8Q/s1600/piramide-queops-egito.JPG";
 
         Wonder w2 = new Wonder();
         w2.name = "Jardins suspensos da Babilônia";
+        w2.url = "http://renatatilli.com.br/blog/wp-content/uploads/jardins-suspensos-da-Babilonia-7.jpg";
 
         Wonder w3 = new Wonder();
         w3.name = "Colosso de Rodes";
+        w3.url = "http://1.bp.blogspot.com/-VZelt-4Bumw/UaOTjPaPlCI/AAAAAAAABbY/5KFsm0PD6uk/s640/colossus_of_rhodes_by_pervandr-d4qcdti.jpg";
 
         wonders.add(w1);
         wonders.add(w2);

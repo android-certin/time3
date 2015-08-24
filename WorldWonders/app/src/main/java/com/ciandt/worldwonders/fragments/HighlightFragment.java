@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.models.Wonder;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by bdias on 21/08/15.
@@ -21,6 +23,8 @@ public class HighlightFragment extends Fragment {
     public static final String WONDER_ARG = "wonder";
 
     private Wonder wonder;
+
+    private ImageView image;
     private TextView name;
 
     public static HighlightFragment newInstance(Wonder wonder) {
@@ -54,9 +58,13 @@ public class HighlightFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         name = (TextView)view.findViewById(R.id.name);
+        image = (ImageView)view.findViewById(R.id.image);
 
         if (wonder != null) {
-            name.setText(wonder.name);
+            name.setText(wonder.name.toUpperCase());
+
+            Picasso.with(getContext()).load(wonder.url).placeholder(R.drawable.placeholder).into(image);
+
         }
 
     }
