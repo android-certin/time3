@@ -22,6 +22,8 @@ import com.ciandt.worldwonders.models.Wonder;
 import com.ciandt.worldwonders.repositories.WondersRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,7 +38,6 @@ public class WondersFragment extends Fragment {
     WondersRepository wondersRepository;
 
     ProgressDialog progressDialog;
-    int dialogCount = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,9 @@ public class WondersFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewPager = (ViewPager)view.findViewById(R.id.view_pager);
+        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.wonder_list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.wonder_list);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -68,44 +69,38 @@ public class WondersFragment extends Fragment {
         fragmentManager = getFragmentManager();
         wondersRepository = new WondersRepository(getContext());
 
-        showDialog(2);
-
-        wondersRepository.getRandom(3, new WondersRepository.WonderRandomListener() {
-            @Override
-            public void onWonderRandom(Exception e, List<Wonder> wonders) {
-                HighlightPageAdapter adapter = new HighlightPageAdapter(fragmentManager, (ArrayList<Wonder>) wonders);
-                viewPager.setAdapter(adapter);
-                dismissDialog();
-            }
-        });
+        showDialog();
 
         wondersRepository.getAll(new WondersRepository.WonderAllListener() {
             @Override
             public void onWonderAll(Exception e, List<Wonder> wonders) {
-                WonderItemAdapter adapter = new WonderItemAdapter(wonders);
-                recyclerView.setAdapter(adapter);
+
+                ArrayList<Wonder> random = new ArrayList<Wonder>(wonders);
+                Collections.shuffle(random);
+                ArrayList<Wonder> highlights = new ArrayList<Wonder>(random.subList(0, Math.min(3, random.size())));
+                random = null;
+
+                HighlightPageAdapter highlightAdapter = new HighlightPageAdapter(fragmentManager, highlights);
+                viewPager.setAdapter(highlightAdapter);
+
+                WonderItemAdapter itemAdapter = new WonderItemAdapter(wonders);
+                recyclerView.setAdapter(itemAdapter);
                 dismissDialog();
             }
         });
     }
 
-    private void showDialog(int count) {
-        dialogCount = count;
-        if (progressDialog == null) {
-            progressDialog = ProgressDialog.show(getContext(), "Título", "Mensagem", false, true, new ProgressDialog.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    wondersRepository.cancel();
-                }
-            });
-        }
+    private void showDialog() {
+        progressDialog = ProgressDialog.show(getContext(), "Título", "Mensagem", false, true, new ProgressDialog.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                wondersRepository.cancel();
+            }
+        });
     }
 
     private void dismissDialog() {
-        dialogCount--;
-        if (dialogCount == 0) {
-            progressDialog.dismiss();
-        }
+        progressDialog.dismiss();
     }
 
 }
