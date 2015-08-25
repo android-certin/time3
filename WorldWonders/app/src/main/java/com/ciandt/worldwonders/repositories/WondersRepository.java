@@ -63,7 +63,7 @@ public class WondersRepository {
                 List<Wonder> result = dao.getRandom(params[0]);
                 dao.close();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
