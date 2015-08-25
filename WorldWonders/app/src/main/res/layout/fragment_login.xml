@@ -23,16 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login_button"
-        android:id="@+id/login_button"
-        android:background="#71a9f4"
-        android:textColor="#fff" />
+        android:id="@+id/login_button" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sing_up_button"
-        android:id="@+id/sing_up_button"
-        android:background="#3ec57b"
-        android:textColor="#fff"/>
+        android:id="@+id/sing_up_button" />
 
 </LinearLayout>
