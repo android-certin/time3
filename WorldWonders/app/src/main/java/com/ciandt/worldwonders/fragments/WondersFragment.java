@@ -61,8 +61,7 @@ public class WondersFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.wonder_list);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         WonderItemAdapter adapter = new WonderItemAdapter(new ArrayList<Wonder>(), null);
         recyclerView.setAdapter(adapter);
