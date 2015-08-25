@@ -71,9 +71,9 @@ public class WondersFragment extends Fragment {
 
         showDialog();
 
-        wondersRepository.getAll(new WondersRepository.WonderAllListener() {
+        wondersRepository.getAll(new WondersRepository.ListResultListener<Wonder>() {
             @Override
-            public void onWonderAll(Exception e, List<Wonder> wonders) {
+            public void onResult(Exception e, List<Wonder> wonders) {
 
                 ArrayList<Wonder> random = new ArrayList<Wonder>(wonders);
                 Collections.shuffle(random);

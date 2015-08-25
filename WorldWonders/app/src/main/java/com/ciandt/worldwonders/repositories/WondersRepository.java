@@ -12,92 +12,41 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-public class WondersRepository {
-
-    private Context context;
-    private List<AsyncTask> tasks;
+public class WondersRepository extends BaseRepository<Wonder> {
 
     public WondersRepository(Context context) {
-        this.context = context;
-        this.tasks = new ArrayList<>();
+        super(context);
     }
 
     @Nonnull
-    public void getAll(final WonderAllListener wonderAllListener) {
-
-        AsyncTask<Void, Void, List<Wonder>> asyncTask = new AsyncTask<Void, Void, List<Wonder>>() {
-
+    public void getAll(final ListResultListener<Wonder> resultListener) {
+        ListExecutor<Wonder, Void> executor = new ListExecutor(resultListener) {
             @Override
-            protected List<Wonder> doInBackground(Void... params) {
-
+            List<Wonder> executeInBackground(Object[] params) {
                 Dao<Wonder> dao = new WonderDao(context);
                 List<Wonder> result = dao.getAll();
                 dao.close();
 
                 return result;
             }
-
-            @Override
-            protected void onPostExecute(List<Wonder> wonders) {
-                super.onPostExecute(wonders);
-                wonderAllListener.onWonderAll(null, wonders);
-                tasks.remove(this);
-            }
-
         };
 
-        tasks.add(asyncTask);
-        asyncTask.execute();
-
+        execute(executor);
     }
 
     @Nonnull
-    public void getRandom(int count, final WonderRandomListener wonderRandomListener) {
-
-        AsyncTask<Integer, Void, List<Wonder>> asyncTask = new AsyncTask<Integer, Void, List<Wonder>>() {
-
+    public void getRandom(int count, final ListResultListener resultListener) {
+        ListExecutor<Wonder, Integer> executor = new ListExecutor(resultListener) {
             @Override
-            protected List<Wonder> doInBackground(Integer... params) {
-
+            List<Wonder> executeInBackground(Object[] params) {
                 WonderDao dao = new WonderDao(context);
-                List<Wonder> result = dao.getRandom(params[0]);
+                List<Wonder> result = dao.getRandom((Integer)params[0]);
                 dao.close();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
                 return result;
             }
-
-            @Override
-            protected void onPostExecute(List<Wonder> wonders) {
-                super.onPostExecute(wonders);
-                wonderRandomListener.onWonderRandom(null, wonders);
-                tasks.remove(this);
-            }
-
         };
 
-        tasks.add(asyncTask);
-        asyncTask.execute(count);
-
-    }
-
-    public interface WonderAllListener {
-        void onWonderAll(Exception e, List<Wonder> wonders);
-    }
-
-    public interface WonderRandomListener {
-        void onWonderRandom(Exception e, List<Wonder> wonders);
-    }
-
-    public void cancel() {
-        for (AsyncTask asyncTask: tasks) {
-            if (!asyncTask.isCancelled()) {
-                asyncTask.cancel(true);
-            }
-        }
+        execute(executor, count);
     }
 }
