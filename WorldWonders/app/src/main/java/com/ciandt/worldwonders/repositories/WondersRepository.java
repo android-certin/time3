@@ -51,8 +51,46 @@ public class WondersRepository {
 
     }
 
+    @Nonnull
+    public void getRandom(int count, final WonderRandomListener wonderRandomListener) {
+
+        AsyncTask<Integer, Void, List<Wonder>> asyncTask = new AsyncTask<Integer, Void, List<Wonder>>() {
+
+            @Override
+            protected List<Wonder> doInBackground(Integer... params) {
+
+                WonderDao dao = new WonderDao(context);
+                List<Wonder> result = dao.getRandom(params[0]);
+                dao.close();
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(List<Wonder> wonders) {
+                super.onPostExecute(wonders);
+                wonderRandomListener.onWonderRandom(null, wonders);
+                tasks.remove(this);
+            }
+
+        };
+
+        tasks.add(asyncTask);
+        asyncTask.execute(count);
+
+    }
+
     public interface WonderAllListener {
         void onWonderAll(Exception e, List<Wonder> wonders);
+    }
+
+    public interface WonderRandomListener {
+        void onWonderRandom(Exception e, List<Wonder> wonders);
     }
 
     public void cancel() {
