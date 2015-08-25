@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.models.User;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends BaseActivity {
 
     private EditText name;
     private EditText username;

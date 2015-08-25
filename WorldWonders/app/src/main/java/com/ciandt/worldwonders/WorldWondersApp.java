@@ -6,12 +6,21 @@ import android.database.sqlite.SQLiteDatabase;
 import com.ciandt.worldwonders.database.WondersSQLiteHelper;
 import com.facebook.stetho.Stetho;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class WorldWondersApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+
         WondersSQLiteHelper.setupDatabase(getApplicationContext());
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-Medium.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
         Stetho.initialize(Stetho
                 .newInitializerBuilder(this)
