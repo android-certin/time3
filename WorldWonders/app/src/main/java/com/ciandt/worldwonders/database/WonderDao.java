@@ -25,7 +25,7 @@ public class WonderDao implements Dao<Wonder> {
 
     @NonNull
     private Wonder getWonder(Cursor cursor) {
-        Wonder wonder =  new Wonder();
+        Wonder wonder = new Wonder();
         wonder.id = cursor.getInt(0);
         wonder.name = cursor.getString(1);
         wonder.description = cursor.getString(2);
@@ -55,16 +55,10 @@ public class WonderDao implements Dao<Wonder> {
 
         if (db != null) {
 
-            try {
-
-                Cursor cursor = db.query(TABLENAME, null, null, null, null, null, null);
-                while (cursor.moveToNext()) {
-                    Wonder wonder = getWonder(cursor);
-                    result.add(wonder);
-                }
-            }
-            catch (Exception e) {
-                e.getMessage();
+            Cursor cursor = db.query(TABLENAME, null, null, null, null, null, null);
+            while (cursor.moveToNext()) {
+                Wonder wonder = getWonder(cursor);
+                result.add(wonder);
             }
 
         }
@@ -77,7 +71,7 @@ public class WonderDao implements Dao<Wonder> {
         Wonder wonder = null;
 
         if (db != null) {
-            Cursor cursor = db.query(TABLENAME, null, "id = ?" , new String[] { String.valueOf(id) }, null, null, null);
+            Cursor cursor = db.query(TABLENAME, null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
 
             if (cursor.moveToNext()) {
                 wonder = getWonder(cursor);
@@ -93,7 +87,7 @@ public class WonderDao implements Dao<Wonder> {
         ArrayList<Wonder> result = new ArrayList<>();
 
         if (db != null) {
-            Cursor cursor = db.query(TABLENAME, null, "name LIKE '?'", new String[]{word}, null, null, null);
+            Cursor cursor = db.query(TABLENAME, null, "name LIKE ?", new String[]{"%" + word + "%"}, null, null, null);
             while (cursor.moveToNext()) {
                 Wonder wonder = getWonder(cursor);
                 result.add(wonder);
@@ -108,13 +102,12 @@ public class WonderDao implements Dao<Wonder> {
 
         if (db != null) {
             ContentValues content = getContentValues(data);
-            int rows = db.update(TABLENAME, content, "id = ?" , new String[] { String.valueOf(data.id) });
+            int rows = db.update(TABLENAME, content, "id = ?", new String[]{String.valueOf(data.id)});
             return rows > 0;
         }
 
         return false;
     }
-
 
 
     @Override
