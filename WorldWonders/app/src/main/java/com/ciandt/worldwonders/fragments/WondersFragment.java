@@ -41,10 +41,12 @@ public class WondersFragment extends Fragment {
         viewPager = (ViewPager)view.findViewById(R.id.view_pager);
 
         WonderDao wonderDao = new WonderDao(getContext());
-        ArrayList<Wonder> wonders = (ArrayList<Wonder>)wonderDao.getAll();
+        ArrayList<Wonder> wonders = (ArrayList<Wonder>)wonderDao.getRandom(3);
+
+
 
 //        ArrayList<Wonder> wonders = (ArrayList<Wonder>)wonderDao.search("colosso");
-        
+
         FragmentManager fragmentManager = getFragmentManager();
         HighlightPageAdapter adapter = new HighlightPageAdapter(fragmentManager, wonders);
         viewPager.setAdapter(adapter);

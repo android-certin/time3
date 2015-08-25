@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import com.ciandt.worldwonders.models.Wonder;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class WonderDao implements Dao<Wonder> {
@@ -141,5 +143,17 @@ public class WonderDao implements Dao<Wonder> {
         if (wondersSQLiteHelper != null) {
             wondersSQLiteHelper.close();
         }
+    }
+
+    public List<Wonder> getRandom(int count) {
+
+        if (count < 1) {
+            return new ArrayList<Wonder>();
+        }
+
+        ArrayList<Wonder> result =  (ArrayList<Wonder>)getAll();
+        Collections.shuffle(result);
+
+        return new ArrayList<Wonder>(result.subList(0, Math.min(count, result.size())));
     }
 }
