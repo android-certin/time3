@@ -59,8 +59,8 @@ public class HighlightFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        name = (TextView)view.findViewById(R.id.name);
         image = (ImageView)view.findViewById(R.id.image);
+        name = (TextView)view.findViewById(R.id.name);
 
         if (wonder != null) {
 

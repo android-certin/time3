@@ -56,6 +56,7 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Wo
         Wonder wonder;
         ImageView image;
         TextView name;
+        TextView description;
 
         public WonderItemHolder(View v, WonderOnClickListener l) {
             super(v);
@@ -63,6 +64,7 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Wo
             listener = l;
             image = (ImageView)v.findViewById(R.id.image);
             name = (TextView)v.findViewById(R.id.name);
+            description = (TextView)v.findViewById(R.id.description);
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,6 +83,7 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Wo
             this.wonder = wonder;
 
             name.setText(wonder.name.toUpperCase());
+            description.setText(wonder.description);
 
             String pictureFilename = wonder.photo.split("\\.")[0];
             int pictureResource = Helper.getRawResourceID(context, pictureFilename);
