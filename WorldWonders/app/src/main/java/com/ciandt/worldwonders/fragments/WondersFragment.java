@@ -53,12 +53,22 @@ public class WondersFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewPager = (ViewPager)view.findViewById(R.id.view_pager);
-        recyclerView = (RecyclerView)view.findViewById(R.id.wonder_list);
-        fragmentManager = getFragmentManager();
-        showDialog(2);
 
+        viewPager = (ViewPager)view.findViewById(R.id.view_pager);
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.wonder_list);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        WonderItemAdapter adapter = new WonderItemAdapter(new ArrayList<Wonder>());
+        recyclerView.setAdapter(adapter);
+
+
+        fragmentManager = getFragmentManager();
         wondersRepository = new WondersRepository(getContext());
+
+        showDialog(2);
 
         wondersRepository.getRandom(3, new WondersRepository.WonderRandomListener() {
             @Override
@@ -72,15 +82,8 @@ public class WondersFragment extends Fragment {
         wondersRepository.getAll(new WondersRepository.WonderAllListener() {
             @Override
             public void onWonderAll(Exception e, List<Wonder> wonders) {
-
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 WonderItemAdapter adapter = new WonderItemAdapter(wonders);
-
-                recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(layoutManager);
-
                 dismissDialog();
             }
         });

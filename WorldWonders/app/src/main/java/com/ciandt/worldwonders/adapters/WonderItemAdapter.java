@@ -66,15 +66,17 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Wo
 
             name.setText(wonder.name.toUpperCase());
 
-//            String pictureFilename = wonder.photo.split("\\.")[0];
-//            int pictureResource = Helper.getRawResourceID(context, pictureFilename);
-//
-//            Picasso.with(context)
-//                    .load(pictureResource)
-//                    .config(Bitmap.Config.RGB_565)
-//                    .placeholder(R.drawable.placeholder)
-//                    .error(R.drawable.placeholder)
-//                    .into(image);
+            String pictureFilename = wonder.photo.split("\\.")[0];
+            int pictureResource = Helper.getRawResourceID(context, pictureFilename);
+
+            Picasso.with(context)
+                    .load(pictureResource)
+                    .config(Bitmap.Config.RGB_565)
+                    .resize(100, 100)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .into(image);
 
         }
     }
