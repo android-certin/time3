@@ -9,10 +9,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.adapters.HighlightPageAdapter;
@@ -62,7 +64,7 @@ public class WondersFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        WonderItemAdapter adapter = new WonderItemAdapter(new ArrayList<Wonder>());
+        WonderItemAdapter adapter = new WonderItemAdapter(new ArrayList<Wonder>(), null);
         recyclerView.setAdapter(adapter);
 
 
@@ -83,7 +85,12 @@ public class WondersFragment extends Fragment {
                 HighlightPageAdapter highlightAdapter = new HighlightPageAdapter(fragmentManager, highlights);
                 viewPager.setAdapter(highlightAdapter);
 
-                WonderItemAdapter itemAdapter = new WonderItemAdapter(wonders);
+                WonderItemAdapter itemAdapter = new WonderItemAdapter(wonders, new WonderItemAdapter.WonderOnClickListener() {
+                    @Override
+                    public void onClick(Wonder wonder) {
+                        Toast.makeText(getContext(), wonder.name.toUpperCase(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 recyclerView.setAdapter(itemAdapter);
                 dismissDialog();
             }
