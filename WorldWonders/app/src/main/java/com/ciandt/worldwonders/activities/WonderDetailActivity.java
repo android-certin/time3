@@ -30,12 +30,15 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     Context context;
     Wonder wonder;
+    Bookmark bookmark;
 
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
     Menu menu;
     ImageView image;
     TextView description;
+
+    MenuItem bookmarkMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,13 @@ public class WonderDetailActivity extends AppCompatActivity {
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(share);
 
+        bookmarkMenuItem = menu.findItem(R.id.action_bookmark);
+        BookmarksDao bookmarksDao = new BookmarksDao(this);
+        bookmark = bookmarksDao.getByWonder(wonder.id);
+        if (bookmark != null) {
+            bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_white_24dp);
+        }
+
         return true;
     }
 
@@ -127,6 +137,17 @@ public class WonderDetailActivity extends AppCompatActivity {
     }
 
     public boolean toggleBookmark() {
+
+        BookmarksDao bookmarksDao = new BookmarksDao(this);
+        if (bookmark != null) {
+            bookmarksDao.delete(bookmark);
+            bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
+        } else {
+            bookmark = new Bookmark(wonder.id);
+            bookmarksDao.insert(bookmark);
+            bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_white_24dp);
+        }
+
 
         return false;
     }

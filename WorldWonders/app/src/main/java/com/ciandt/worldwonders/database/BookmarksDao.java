@@ -77,6 +77,20 @@ public class BookmarksDao implements Dao<Bookmark> {
         return bookmark;
     }
 
+    public Bookmark getByWonder(int idWonder) {
+        Bookmark bookmark = null;
+
+        if (db != null) {
+            Cursor cursor = db.query(TABLENAME, null, "idWonders = ?", new String[]{String.valueOf(idWonder)}, null, null, null);
+
+            if (cursor.moveToNext()) {
+                bookmark = getBookmak(cursor);
+            }
+        }
+
+        return bookmark;
+    }
+
     @Override
     public List<Bookmark> search(String word) {
         return getAll();
