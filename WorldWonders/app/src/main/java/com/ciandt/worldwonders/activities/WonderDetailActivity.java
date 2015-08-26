@@ -37,7 +37,7 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        toolbar.inflateMenu(R.menu.menu_wonderdetail);
+  //      toolbar.inflateMenu(R.menu.menu_wonderdetail);
 
 
         image = (ImageView)findViewById(R.id.image);
@@ -53,7 +53,7 @@ public class WonderDetailActivity extends AppCompatActivity {
                     Wonder wonder = list.get(0);
 
                     name.setText(wonder.name.toUpperCase());
-                    description.setText(wonder.description);
+                    description.setText(wonder.description+ wonder.description);
 
                     String pictureFilename = wonder.photo.split("\\.")[0];
                     int pictureResource = Helper.getRawResourceID(context, pictureFilename);
