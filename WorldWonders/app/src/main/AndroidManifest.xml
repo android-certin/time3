@@ -29,7 +29,7 @@
             android:label="@string/title_activity_signup" >
         </activity>
         <activity
-            android:name=".activities.DetailActivity"
+            android:name=".activities.WonderDetailActivity"
             android:label="@string/title_activity_detail" >
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
