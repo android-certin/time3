@@ -4,20 +4,30 @@
     android:padding="16dp"
     android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/textUsername"
-        android:hint="@string/username_hint"
-        android:layout_marginBottom="15dp"/>
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/textPassword"
-        android:hint="@string/password_hint"
-        android:password="true"
-        android:paddingBottom="15dp"/>
+        android:layout_height="50dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/textUsername"
+            android:hint="@string/username_hint"
+            android:layout_marginBottom="15dp"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/textPassword"
+            android:hint="@string/password_hint"
+            android:password="true"
+            android:paddingBottom="15dp"/>/>
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:layout_width="match_parent"
