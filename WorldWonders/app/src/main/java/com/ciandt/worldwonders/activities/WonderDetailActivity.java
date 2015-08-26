@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,16 +23,25 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     Context context;
     ImageView image;
+    TextView name;
     TextView description;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wonderdetail);
-
         context = this;
 
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+//        toolbar.inflateMenu(R.menu.menu_wonderdetail);
+
+
         image = (ImageView)findViewById(R.id.image);
+        name = (TextView)findViewById(R.id.name);
         description = (TextView)findViewById(R.id.description);
 
         WondersRepository wondersRepository = new WondersRepository(this);
@@ -40,6 +52,7 @@ public class WonderDetailActivity extends AppCompatActivity {
 
                     Wonder wonder = list.get(0);
 
+                    name.setText(wonder.name.toUpperCase());
                     description.setText(wonder.description);
 
                     String pictureFilename = wonder.photo.split("\\.")[0];
@@ -56,6 +69,27 @@ public class WonderDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_wonderdetail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

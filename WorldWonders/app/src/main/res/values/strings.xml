@@ -11,4 +11,7 @@
     <string name="sing_up_button">Registrar</string>
     <string name="title_activity_world_wonders">WorldWondersActivity</string>
     <string name="title_activity_detail">Wonder</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="share">Share</string>
+    <string name="directions">Directions</string>
 </resources>

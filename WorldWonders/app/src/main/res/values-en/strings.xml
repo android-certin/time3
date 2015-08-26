@@ -9,4 +9,7 @@
     <string name="app_name">World Wonders</string>
     <string name="hello_world">World Wonders</string>
     <string name="title_activity_signup">Sign up</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="share">Share</string>
+    <string name="directions">Directions</string>
 </resources>

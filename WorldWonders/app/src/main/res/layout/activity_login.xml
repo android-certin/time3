@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:popupTheme="@style/AppTheme.Widget.Toolbar"
+        style="@style/AppTheme.Widget.Toolbar"
         />
 
     <FrameLayout android:id="@+id/container"
