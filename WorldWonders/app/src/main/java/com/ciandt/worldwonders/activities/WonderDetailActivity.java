@@ -141,6 +141,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         BookmarksDao bookmarksDao = new BookmarksDao(this);
         if (bookmark != null) {
             bookmarksDao.delete(bookmark);
+            bookmark = null;
             bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
         } else {
             bookmark = new Bookmark(wonder.id);
