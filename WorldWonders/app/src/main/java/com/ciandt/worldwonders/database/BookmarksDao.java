@@ -99,7 +99,7 @@ public class BookmarksDao implements Dao<Bookmark> {
     public boolean delete(Bookmark data) {
 
         if (db != null) {
-            int rows = db.delete(TABLENAME, "id = ?", new String[]{String.valueOf(data.id)});
+            int rows = db.delete(TABLENAME, "idWonders = ?", new String[]{String.valueOf(data.idWonders)});
             return rows > 0;
         }
 

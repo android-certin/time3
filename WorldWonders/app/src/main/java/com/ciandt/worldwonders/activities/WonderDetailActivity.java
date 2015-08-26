@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.database.BookmarksDao;
 import com.ciandt.worldwonders.helpers.Helper;
+import com.ciandt.worldwonders.models.Bookmark;
 import com.ciandt.worldwonders.models.Wonder;
 import com.ciandt.worldwonders.repositories.BaseRepository;
 import com.ciandt.worldwonders.repositories.WondersRepository;
@@ -125,9 +127,6 @@ public class WonderDetailActivity extends AppCompatActivity {
     }
 
     public boolean toggleBookmark() {
-
-        
-
 
         return false;
     }
