@@ -41,7 +41,6 @@ public class WonderDao implements Dao<Wonder> {
     @NonNull
     private ContentValues getContentValues(Wonder data) {
         ContentValues content = new ContentValues();
-        content.put("id", data.id);
         content.put("name", data.name);
         content.put("description", data.description);
         content.put("url", data.url);

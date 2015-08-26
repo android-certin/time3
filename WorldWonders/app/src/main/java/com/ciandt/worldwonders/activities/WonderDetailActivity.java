@@ -25,6 +25,7 @@ import com.ciandt.worldwonders.repositories.WondersRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class WonderDetailActivity extends AppCompatActivity {
 
@@ -124,7 +125,7 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     public boolean startDirections() {
 
-        Uri uri = Uri.parse(String.format("geo:%f,%f?q=%f,%f(%s)", wonder.latitude, wonder.longitude, wonder.latitude, wonder.longitude, Uri.encode(wonder.name)));
+        Uri uri = Uri.parse(String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f(%s)", wonder.latitude, wonder.longitude, wonder.latitude, wonder.longitude, Uri.encode(wonder.name)));
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
         mapIntent.setPackage("com.google.android.apps.maps");
 

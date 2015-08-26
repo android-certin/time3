@@ -40,7 +40,6 @@ public class BookmarksDao implements Dao<Bookmark> {
     @NonNull
     private ContentValues getContentValues(Bookmark data) {
         ContentValues content = new ContentValues();
-        content.put("id", data.id);
         content.put("idWonders", data.idWonders);
         return content;
     }
