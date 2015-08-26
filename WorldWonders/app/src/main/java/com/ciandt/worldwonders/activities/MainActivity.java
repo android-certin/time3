@@ -3,6 +3,7 @@ package com.ciandt.worldwonders.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.ciandt.worldwonders.R;
@@ -18,11 +19,16 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = "WorldWonders";
 
+    Toolbar toolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Log.w(TAG, "OnCreate");
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         FragmentManager manager = getSupportFragmentManager();
         LoginFragment loginFragment = new LoginFragment();
