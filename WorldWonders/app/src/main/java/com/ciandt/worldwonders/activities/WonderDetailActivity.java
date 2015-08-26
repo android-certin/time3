@@ -2,6 +2,7 @@ package com.ciandt.worldwonders.activities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,8 +24,8 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     Context context;
     ImageView image;
-    TextView name;
     TextView description;
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     Toolbar toolbar;
 
@@ -36,12 +37,12 @@ public class WonderDetailActivity extends AppCompatActivity {
 
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
   //      toolbar.inflateMenu(R.menu.menu_wonderdetail);
 
 
         image = (ImageView)findViewById(R.id.image);
-        name = (TextView)findViewById(R.id.name);
         description = (TextView)findViewById(R.id.description);
 
         WondersRepository wondersRepository = new WondersRepository(this);
@@ -52,7 +53,7 @@ public class WonderDetailActivity extends AppCompatActivity {
 
                     Wonder wonder = list.get(0);
 
-                    name.setText(wonder.name.toUpperCase());
+                    collapsingToolbarLayout.setTitle(wonder.name.toUpperCase());
                     description.setText(wonder.description+ wonder.description);
 
                     String pictureFilename = wonder.photo.split("\\.")[0];
