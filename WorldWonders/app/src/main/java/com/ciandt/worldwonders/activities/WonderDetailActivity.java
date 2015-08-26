@@ -1,6 +1,7 @@
 package com.ciandt.worldwonders.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,11 +24,13 @@ import java.util.List;
 public class WonderDetailActivity extends AppCompatActivity {
 
     Context context;
+    Wonder wonder;
+
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    Toolbar toolbar;
+
     ImageView image;
     TextView description;
-    CollapsingToolbarLayout collapsingToolbarLayout;
-
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +38,29 @@ public class WonderDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wonderdetail);
         context = this;
 
+        Intent intent = (Intent) getIntent();
+        wonder = (Wonder) intent.getSerializableExtra("wonder");
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
-  //      toolbar.inflateMenu(R.menu.menu_wonderdetail);
 
+        image = (ImageView) findViewById(R.id.image);
+        description = (TextView) findViewById(R.id.description);
 
-        image = (ImageView)findViewById(R.id.image);
-        description = (TextView)findViewById(R.id.description);
+        collapsingToolbarLayout.setTitle(wonder.name.toUpperCase());
+        description.setText(wonder.description);
 
-        WondersRepository wondersRepository = new WondersRepository(this);
-        wondersRepository.getAll(new BaseRepository.ListResultListener<Wonder>() {
-            @Override
-            public void onResult(Exception e, List<Wonder> list) {
-                if(list.size() > 0) {
+        String pictureFilename = wonder.photo.split("\\.")[0];
+        int pictureResource = Helper.getRawResourceID(context, pictureFilename);
 
-                    Wonder wonder = list.get(0);
+        Picasso.with(context)
+                .load(pictureResource)
+                .config(Bitmap.Config.RGB_565)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(image);
 
-                    collapsingToolbarLayout.setTitle(wonder.name.toUpperCase());
-                    description.setText(wonder.description+ wonder.description);
-
-                    String pictureFilename = wonder.photo.split("\\.")[0];
-                    int pictureResource = Helper.getRawResourceID(context, pictureFilename);
-
-                    Picasso.with(context)
-                            .load(pictureResource)
-                            .config(Bitmap.Config.RGB_565)
-                            .placeholder(R.drawable.placeholder)
-                            .error(R.drawable.placeholder)
-                            .into(image);
-
-                }
-            }
-        });
 
     }
 

@@ -3,6 +3,7 @@ package com.ciandt.worldwonders.fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.activities.WonderDetailActivity;
 import com.ciandt.worldwonders.adapters.HighlightPageAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdapter;
 import com.ciandt.worldwonders.database.WonderDao;
@@ -91,7 +93,9 @@ public class WondersFragment extends Fragment {
                 WonderItemAdapter itemAdapter = new WonderItemAdapter(wonders, new WonderItemAdapter.WonderOnClickListener() {
                     @Override
                     public void onClick(Wonder wonder) {
-                        Toast.makeText(getContext(), wonder.name.toUpperCase(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), WonderDetailActivity.class);
+                        intent.putExtra("wonder", wonder);
+                        startActivity(intent);
                     }
                 });
                 recyclerView.setAdapter(itemAdapter);
