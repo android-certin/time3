@@ -1,22 +1,33 @@
 package com.ciandt.worldwonders.activities;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helpers.Helper;
@@ -31,6 +42,7 @@ import com.squareup.picasso.Picasso;
  */
 public class WonderDetailFragment extends android.support.v4.app.Fragment {
 
+    public static final String WONDER = "wonder";
     Wonder wonder;
     Menu menu;
     WonderDetailHelper wonderDetailHelper;
@@ -45,7 +57,7 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
     public static WonderDetailFragment newInstance(Wonder wonder) {
         WonderDetailFragment fragment = new WonderDetailFragment();
         Bundle args = new Bundle();
-        args.putSerializable("wonder", wonder);
+        args.putSerializable(WONDER, wonder);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +68,7 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
         setHasOptionsMenu(true);
         Bundle args = getArguments();
         if(args != null) {
-            this.wonder = (Wonder) args.getSerializable("wonder");
+            this.wonder = (Wonder) args.getSerializable(WONDER);
         }
         wonderDetailHelper = new WonderDetailHelper(getContext(), this.wonder);
 
@@ -75,6 +87,7 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
 
         ImageView imageWonder = (ImageView) view.findViewById(R.id.image_detail);
         TextView description = (TextView) view.findViewById(R.id.description_detail);
+        TextView link = (TextView) view.findViewById(R.id.link_detail);
 
         String pictureFilename = wonder.photo.split("\\.")[0];
         int pictureResource = Helper.getRawResourceID(getContext(), pictureFilename);
@@ -87,6 +100,21 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
                 .into(imageWonder);
 
         description.setText(wonder.description);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                createDialogWebview(wonder.name, wonder.url);
+            }
+        };
+
+        SpannableString styledString = new SpannableString(getString(R.string.description_source));
+        styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 7, 16, 0);
+        styledString.setSpan(new UnderlineSpan(), 7, 16, 0);
+        styledString.setSpan(clickableSpan, 7, 16, 0);
+
+        link.setMovementMethod(LinkMovementMethod.getInstance());
+        link.setText(styledString);
     }
 
     @Override
@@ -139,5 +167,30 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createDialogWebview(String title, String url) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle(title);
+
+        WebView wv = new WebView(getContext());
+        wv.loadUrl(url);
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+
+                return true;
+            }
+        });
+
+        alert.setView(wv);
+        alert.setNegativeButton(getString(R.string.CLOSE), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
     }
 }

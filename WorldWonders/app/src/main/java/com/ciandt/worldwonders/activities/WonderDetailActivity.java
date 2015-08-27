@@ -88,7 +88,6 @@ public class WonderDetailActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                Toast.makeText(WonderDetailActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 createDialogWebview(wonder.name, wonder.url);
             }
         };
@@ -100,8 +99,6 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         link.setMovementMethod(LinkMovementMethod.getInstance());
         link.setText(styledString);
-
-
     }
 
     @Override
