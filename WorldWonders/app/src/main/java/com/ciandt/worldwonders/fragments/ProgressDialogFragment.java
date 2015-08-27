@@ -24,6 +24,7 @@ public class ProgressDialogFragment extends DialogFragment {
 
     public static ProgressDialogFragment show(FragmentManager fragmentManager) {
         ProgressDialogFragment fragment = new ProgressDialogFragment();
+        fragment.setCancelable(false);
         fragment.show(fragmentManager, "progressdialog");
         return fragment;
     }
@@ -33,7 +34,7 @@ public class ProgressDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_progressdialog, null);
         setupView(view);
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setView(view).setCancelable(false).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setView(view).create();
         return alertDialog;
     }
 

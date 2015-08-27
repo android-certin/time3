@@ -99,7 +99,7 @@ public class WondersFragment extends Fragment {
                     }
                 });
                 recyclerView.setAdapter(itemAdapter);
-//                dismissDialog();
+                dismissDialog();
             }
         });
     }
