@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.WorldWondersApp;
 import com.ciandt.worldwonders.activities.WonderDetailActivity;
-import com.ciandt.worldwonders.activities.WonderDetailFragment;
 import com.ciandt.worldwonders.adapters.HighlightPageAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdapter;
 import com.ciandt.worldwonders.helpers.WonderDetailHelper;
@@ -34,18 +33,13 @@ import java.util.List;
  */
 public class WondersFragment extends Fragment {
 
-    Menu menu;
     ViewPager viewPager;
     RecyclerView recyclerView;
-    WonderDetailHelper wonderDetailHelper;
-    MenuItem bookmarkMenuItem;
 
     FragmentManager fragmentManager;
     WondersRepository wondersRepository;
 
     ProgressDialogFragment progressDialog;
-
-    Wonder wonder;
 
     View view;
 
@@ -139,10 +133,4 @@ public class WondersFragment extends Fragment {
         manager.beginTransaction().replace(R.id.container_detail, fragment).commit();
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        if(WorldWondersApp.isTablet(getContext()) && wonderDetailHelper != null) {
-//
-//        }
-//    }
 }
