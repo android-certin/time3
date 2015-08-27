@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.database.BookmarksDao;
 import com.ciandt.worldwonders.helpers.Helper;
+import com.ciandt.worldwonders.helpers.WonderDetailHelper;
 import com.ciandt.worldwonders.models.Bookmark;
 import com.ciandt.worldwonders.models.Wonder;
 import com.squareup.picasso.Picasso;
@@ -40,7 +41,6 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     Context context;
     Wonder wonder;
-    Bookmark bookmark;
 
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
@@ -51,6 +51,8 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     MenuItem bookmarkMenuItem;
 
+    WonderDetailHelper wonderDetailHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         Intent intent = (Intent) getIntent();
         wonder = (Wonder) intent.getSerializableExtra("wonder");
+        wonderDetailHelper = new WonderDetailHelper(this, wonder);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -106,7 +109,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_wonderdetail, menu);
 
         MenuItem directionsItem = menu.findItem(R.id.action_directions);
-        if (wonder.latitude == 0.0 && wonder.longitude == 0.0) {
+        if (!wonderDetailHelper.hasLocation()) {
             directionsItem.setVisible(false);
         }
 
@@ -119,9 +122,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         shareActionProvider.setShareIntent(share);
 
         bookmarkMenuItem = menu.findItem(R.id.action_bookmark);
-        BookmarksDao bookmarksDao = new BookmarksDao(this);
-        bookmark = bookmarksDao.getByWonder(wonder.id);
-        if (bookmark != null) {
+        if (wonderDetailHelper.isBookmarked()) {
             bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_white_24dp);
         }
 
@@ -138,47 +139,22 @@ public class WonderDetailActivity extends AppCompatActivity {
         switch (id) {
 
             case R.id.action_directions:
-                return startDirections();
+                return wonderDetailHelper.startDirections();
 
             case R.id.action_bookmark:
-                return toggleBookmark();
+                wonderDetailHelper.toggleBookmark();
+                if (wonderDetailHelper.isBookmarked()) {
+                    bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_white_24dp);
+                } else {
+                    bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
+                }
+                break;
 
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public boolean startDirections() {
-
-        Uri uri = Uri.parse(String.format(Locale.ENGLISH, "geo:%f,%f?q=%f,%f(%s)", wonder.latitude, wonder.longitude, wonder.latitude, wonder.longitude, Uri.encode(wonder.name)));
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean toggleBookmark() {
-
-        BookmarksDao bookmarksDao = new BookmarksDao(this);
-        if (bookmark != null) {
-            bookmarksDao.delete(bookmark);
-            bookmark = null;
-            bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
-        } else {
-            bookmark = new Bookmark(wonder.id);
-            bookmarksDao.insert(bookmark);
-            bookmarkMenuItem.setIcon(R.drawable.ic_bookmark_white_24dp);
-        }
-
-
-        return false;
     }
 
     private void createDialogWebview(String title, String url) {
