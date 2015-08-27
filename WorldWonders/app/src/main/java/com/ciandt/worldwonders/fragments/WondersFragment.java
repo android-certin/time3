@@ -43,7 +43,7 @@ public class WondersFragment extends Fragment {
     FragmentManager fragmentManager;
     WondersRepository wondersRepository;
 
-    ProgressDialog progressDialog;
+    ProgressDialogFragment progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,18 +99,13 @@ public class WondersFragment extends Fragment {
                     }
                 });
                 recyclerView.setAdapter(itemAdapter);
-                dismissDialog();
+//                dismissDialog();
             }
         });
     }
 
     private void showDialog() {
-        progressDialog = ProgressDialog.show(getContext(), "Título", "Mensagem", false, true, new ProgressDialog.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                wondersRepository.cancel();
-            }
-        });
+        progressDialog = ProgressDialogFragment.show(getFragmentManager());
     }
 
     private void dismissDialog() {
