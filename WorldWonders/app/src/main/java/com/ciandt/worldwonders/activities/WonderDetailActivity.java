@@ -101,6 +101,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         link.setMovementMethod(LinkMovementMethod.getInstance());
         link.setText(styledString);
 
+
     }
 
     @Override

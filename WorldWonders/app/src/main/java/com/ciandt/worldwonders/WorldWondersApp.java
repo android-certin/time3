@@ -1,6 +1,7 @@
 package com.ciandt.worldwonders;
 
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.ciandt.worldwonders.database.WondersSQLiteHelper;
@@ -30,4 +31,7 @@ public class WorldWondersApp extends Application {
         );
     }
 
+    public static boolean isTablet(Context context) {
+        return context.getResources().getConfiguration().smallestScreenWidthDp >= 720;
+    }
 }

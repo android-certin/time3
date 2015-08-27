@@ -11,11 +11,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,11 +29,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.WorldWondersApp;
 import com.ciandt.worldwonders.activities.WonderDetailActivity;
+import com.ciandt.worldwonders.activities.WonderDetailFragment;
 import com.ciandt.worldwonders.adapters.HighlightPageAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdapter;
 import com.ciandt.worldwonders.database.WonderDao;
 import com.ciandt.worldwonders.helpers.Helper;
+import com.ciandt.worldwonders.helpers.WonderDetailHelper;
 import com.ciandt.worldwonders.models.Wonder;
 import com.ciandt.worldwonders.repositories.WondersRepository;
 import com.squareup.picasso.Picasso;
@@ -43,8 +51,11 @@ import java.util.List;
  */
 public class WondersFragment extends Fragment {
 
+    Menu menu;
     ViewPager viewPager;
     RecyclerView recyclerView;
+    WonderDetailHelper wonderDetailHelper;
+    MenuItem bookmarkMenuItem;
 
     FragmentManager fragmentManager;
     WondersRepository wondersRepository;
@@ -58,6 +69,7 @@ public class WondersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -72,7 +84,7 @@ public class WondersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        if (WondersFragment.isTablet(getContext())) {
+        if (WorldWondersApp.isTablet(getContext())) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
@@ -109,7 +121,7 @@ public class WondersFragment extends Fragment {
                     @Override
                     public void onClick(Wonder wonder) {
 
-                        if (WondersFragment.isTablet(getContext())) {
+                        if (WorldWondersApp.isTablet(getContext())) {
                             showWonder(wonder);
                         } else {
                             Intent intent = new Intent(getActivity(), WonderDetailActivity.class);
@@ -121,7 +133,7 @@ public class WondersFragment extends Fragment {
 
                 recyclerView.setAdapter(itemAdapter);
 
-                if (WondersFragment.isTablet(getContext()) && wonders.size() > 0){
+                if (WorldWondersApp.isTablet(getContext()) && wonders.size() > 0){
                     showWonder(wonders.get(0));
                 }
 
@@ -138,25 +150,16 @@ public class WondersFragment extends Fragment {
         progressDialog.dismiss();
     }
 
-    public static boolean isTablet(Context context) {
-        return context.getResources().getConfiguration().smallestScreenWidthDp >= 720;
-    }
-
     public void showWonder(Wonder wonder) {
-        this.wonder = wonder;
-        ImageView imageWonder = (ImageView) view.findViewById(R.id.image_detail);
-        TextView description = (TextView) view.findViewById(R.id.description_detail);
-
-        String pictureFilename = wonder.photo.split("\\.")[0];
-        int pictureResource = Helper.getRawResourceID(getContext(), pictureFilename);
-
-        Picasso.with(getContext())
-                .load(pictureResource)
-                .config(Bitmap.Config.RGB_565)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
-                .into(imageWonder);
-
-        description.setText(wonder.description);
+        FragmentManager manager = getFragmentManager();
+        WonderDetailFragment fragment = WonderDetailFragment.newInstance(wonder);
+        manager.beginTransaction().replace(R.id.container_detail, fragment).commit();
     }
+
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        if(WorldWondersApp.isTablet(getContext()) && wonderDetailHelper != null) {
+//
+//        }
+//    }
 }
