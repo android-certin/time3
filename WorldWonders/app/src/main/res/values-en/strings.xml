@@ -12,4 +12,5 @@
     <string name="bookmark">Bookmark</string>
     <string name="share">Share</string>
     <string name="directions">Directions</string>
+    <string name="description_source">Fonte: Wikipedia</string>
 </resources>

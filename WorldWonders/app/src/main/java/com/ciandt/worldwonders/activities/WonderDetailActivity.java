@@ -3,6 +3,7 @@ package com.ciandt.worldwonders.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
@@ -10,10 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.database.BookmarksDao;
@@ -38,6 +47,7 @@ public class WonderDetailActivity extends AppCompatActivity {
     Menu menu;
     ImageView image;
     TextView description;
+    TextView link;
 
     MenuItem bookmarkMenuItem;
 
@@ -56,6 +66,7 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         image = (ImageView) findViewById(R.id.image);
         description = (TextView) findViewById(R.id.description);
+        link = (TextView) findViewById(R.id.link);
 
         collapsingToolbarLayout.setTitle(wonder.name.toUpperCase());
         description.setText(wonder.description);
@@ -70,6 +81,21 @@ public class WonderDetailActivity extends AppCompatActivity {
                 .error(R.drawable.placeholder)
                 .into(image);
 
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Toast.makeText(WonderDetailActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        SpannableString styledString = new SpannableString(getString(R.string.description_source));
+        styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 7, 16, 0);
+        styledString.setSpan(new UnderlineSpan(), 7, 16, 0);
+        styledString.setSpan(clickableSpan, 7, 16, 0);
+
+        link.setMovementMethod(LinkMovementMethod.getInstance());
+        link.setText(styledString);
 
     }
 
