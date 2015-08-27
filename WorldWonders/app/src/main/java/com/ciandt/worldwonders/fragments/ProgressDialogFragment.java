@@ -48,11 +48,11 @@ public class ProgressDialogFragment extends DialogFragment {
 
         AnimationHelper animationHelper = new AnimationHelper(500);
         animationHelper
-                .addStep(new AnimationHelper.Step(imageView1, getResources().getDrawable(R.drawable.camera_normal, null), getResources().getDrawable(R.drawable.camera_selected, null)))
-                .addStep(new AnimationHelper.Step(imageView2, getResources().getDrawable(R.drawable.eiffel_tower_normal, null), getResources().getDrawable(R.drawable.eiffel_tower_selected, null)))
-                .addStep(new AnimationHelper.Step(imageView3, getResources().getDrawable(R.drawable.suitcase_normal, null), getResources().getDrawable(R.drawable.suitcase_selected, null)))
-                .addStep(new AnimationHelper.Step(imageView4, getResources().getDrawable(R.drawable.pyramids_normal, null), getResources().getDrawable(R.drawable.pyramids_selected, null)))
-                .addStep(new AnimationHelper.Step(imageView5, getResources().getDrawable(R.drawable.taj_mahal_normal, null), getResources().getDrawable(R.drawable.taj_mahal_selected, null)))
+                .addStep(new AnimationHelper.Step(imageView1, getResources().getDrawable(R.drawable.camera_normal), getResources().getDrawable(R.drawable.camera_selected)))
+                .addStep(new AnimationHelper.Step(imageView2, getResources().getDrawable(R.drawable.eiffel_tower_normal), getResources().getDrawable(R.drawable.eiffel_tower_selected)))
+                .addStep(new AnimationHelper.Step(imageView3, getResources().getDrawable(R.drawable.suitcase_normal), getResources().getDrawable(R.drawable.suitcase_selected)))
+                .addStep(new AnimationHelper.Step(imageView4, getResources().getDrawable(R.drawable.pyramids_normal), getResources().getDrawable(R.drawable.pyramids_selected)))
+                .addStep(new AnimationHelper.Step(imageView5, getResources().getDrawable(R.drawable.taj_mahal_normal), getResources().getDrawable(R.drawable.taj_mahal_selected)))
                 .build()
                 .start();
 

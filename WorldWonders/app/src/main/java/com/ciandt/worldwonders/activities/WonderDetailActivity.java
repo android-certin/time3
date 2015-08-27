@@ -1,17 +1,18 @@
 package com.ciandt.worldwonders.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -20,6 +21,8 @@ import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +32,8 @@ import com.ciandt.worldwonders.database.BookmarksDao;
 import com.ciandt.worldwonders.helpers.Helper;
 import com.ciandt.worldwonders.models.Bookmark;
 import com.ciandt.worldwonders.models.Wonder;
-import com.ciandt.worldwonders.repositories.BaseRepository;
-import com.ciandt.worldwonders.repositories.WondersRepository;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
 import java.util.Locale;
 
 public class WonderDetailActivity extends AppCompatActivity {
@@ -86,6 +86,7 @@ public class WonderDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
                 Toast.makeText(WonderDetailActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                createDialogWebview(wonder.name, wonder.url);
             }
         };
 
@@ -178,6 +179,31 @@ public class WonderDetailActivity extends AppCompatActivity {
 
 
         return false;
+    }
+
+    private void createDialogWebview(String title, String url) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(title);
+
+        WebView wv = new WebView(this);
+        wv.loadUrl(url);
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+
+                return true;
+            }
+        });
+
+        alert.setView(wv);
+        alert.setNegativeButton(getString(R.string.CLOSE), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
     }
 
 }
