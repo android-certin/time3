@@ -1,48 +1,30 @@
 package com.ciandt.worldwonders.fragments;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.WorldWondersApp;
 import com.ciandt.worldwonders.activities.WonderDetailActivity;
-import com.ciandt.worldwonders.activities.WonderDetailFragment;
 import com.ciandt.worldwonders.adapters.HighlightPageAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdapter;
-import com.ciandt.worldwonders.database.WonderDao;
-import com.ciandt.worldwonders.helpers.Helper;
 import com.ciandt.worldwonders.helpers.WonderDetailHelper;
 import com.ciandt.worldwonders.models.Wonder;
 import com.ciandt.worldwonders.repositories.WondersRepository;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,18 +33,13 @@ import java.util.List;
  */
 public class WondersFragment extends Fragment {
 
-    Menu menu;
     ViewPager viewPager;
     RecyclerView recyclerView;
-    WonderDetailHelper wonderDetailHelper;
-    MenuItem bookmarkMenuItem;
 
     FragmentManager fragmentManager;
     WondersRepository wondersRepository;
 
     ProgressDialogFragment progressDialog;
-
-    Wonder wonder;
 
     View view;
 
@@ -156,10 +133,4 @@ public class WondersFragment extends Fragment {
         manager.beginTransaction().replace(R.id.container_detail, fragment).commit();
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        if(WorldWondersApp.isTablet(getContext()) && wonderDetailHelper != null) {
-//
-//        }
-//    }
 }

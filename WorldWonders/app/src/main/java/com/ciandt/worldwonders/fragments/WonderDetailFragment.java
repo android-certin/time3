@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders.activities;
+package com.ciandt.worldwonders.fragments;
 
 
 import android.content.DialogInterface;
@@ -7,11 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -27,7 +28,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helpers.Helper;
@@ -43,6 +43,10 @@ import com.squareup.picasso.Picasso;
 public class WonderDetailFragment extends android.support.v4.app.Fragment {
 
     public static final String WONDER = "wonder";
+
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    Toolbar toolbar;
+
     Wonder wonder;
     Menu menu;
     WonderDetailHelper wonderDetailHelper;
@@ -84,6 +88,15 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
+        if (toolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
+        if (collapsingToolbarLayout != null) {
+            collapsingToolbarLayout.setTitle(wonder.name.toUpperCase());
+        }
 
         ImageView imageWonder = (ImageView) view.findViewById(R.id.image_detail);
         TextView description = (TextView) view.findViewById(R.id.description_detail);
