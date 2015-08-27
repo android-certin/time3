@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <animation-list android:id="@+id/taj_mahal" android:oneshot="false">
+        <item android:drawable="@drawable/taj_mahal_normal" android:duration="500" />
+        <item android:drawable="@drawable/taj_mahal_selected" android:duration="4500" />
+    </animation-list>
+</selector>
